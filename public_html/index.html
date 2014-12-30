@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html ng-app="tutorialApp">
+    <head>
+        <title>Tutorial</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/style.css">
+        <script type="text/javascript" src="js/libs/angular.min.js"></script>
+        <script type="text/javascript" src="js/libs/angular-animate.min.js"></script>
+        <script type="text/javascript" src="js/app/module.js"></script>
+    </head>
+    <body>
+        <table class="table" ng-controller="ArticlesCtrl" >
+            <tr ng-repeat="article in articles">
+                <td>{{article.id}}</td>
+                <td>{{article.name}}</td>
+                <td>{{article.price}}</td>
+                <td><a href class="btn btn-default btn-sm" ng-click="cart.addArticle(article);">Hinzufügen</a></td>
+            </tr>
+        </table>
+        
+        <div ng-controller="CartCtrl">
+            <div ng-hide="cart.getItems().length" class="alert alert-warning">Ihr Warenkorb ist noch leer.</div>
+            <table ng-show="cart.getItems().length" class="table">
+                <tr class="cart-item" ng-repeat="item in cart.getItems() track by $index">
+                    <td>{{item.name}}</td>
+                    <td>{{item.price | currency}}</td>
+                </tr>
+                <tr>
+                    <td>{{cart.getItems().length}} Artikel</td>
+                    <td>{{cart.sum() | currency}}</td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+        
+    </body>
+</html>
