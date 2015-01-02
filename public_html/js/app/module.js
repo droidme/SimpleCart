@@ -1,4 +1,12 @@
-angular.module('tutorialApp',['ngAnimate'])
+'use strict';
+
+angular.module('tutorialApp',['ngAnimate','ngRoute'])
+    .config(function($routeProvider){
+        $routeProvider
+        .when('/', { templateUrl: 'articles.html'})
+        .when('/about', { template: 'Über unsere Pizzeria'})
+        .otherwise({redirectTo: '/'});
+    })
 
     .factory('Cart', function() {
         var items = [];
@@ -15,6 +23,17 @@ angular.module('tutorialApp',['ngAnimate'])
                 },0);
             }
         };
+    })
+    
+    .directive('price', function(){
+        return {
+            restrict: 'E',
+            scope: {
+                value: '='
+            },
+            template: '<span ng-show="value == 0">kostenlos</span>' +
+                    '<span ng-show="value > 0">{{value | currency}}</span>'
+        }
     })
     
     .controller('ArticlesCtrl', function($scope, $http, Cart){
